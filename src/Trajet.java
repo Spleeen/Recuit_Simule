@@ -115,9 +115,9 @@ public class Trajet {
 		Random rand = new Random();
 		Trajet trajet = new Trajet();
 
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 50; i++) {
 			Ville nouvelleVille = new Ville(i, new Coords(Math.abs(rand
-					.nextLong() % 100), Math.abs(rand.nextLong() % 100)));
+					.nextLong() % 1000), Math.abs(rand.nextLong() % 1000)));
 			trajet.addVille(nouvelleVille);
 		}
 
