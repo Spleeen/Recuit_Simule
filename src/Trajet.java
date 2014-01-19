@@ -36,6 +36,7 @@ public class Trajet {
 
 		res = res.substring(0, res.length() - 1) + ']';
 		System.out.println(res);
+		System.out.println("Distance réalisée : " + calcDistance());
 	}
 
 	public ArrayList<Ville> get_villes() {
@@ -59,7 +60,6 @@ public class Trajet {
 			final Coords B = _villes.get(i + 1).get_coords();
 			distanceTrajet += Math.sqrt(Math.pow(B.x - A.x, 2)
 					+ Math.pow(B.y - A.y, 2));
-
 		}
 
 		if (_villes.size() > 1) {
@@ -115,12 +115,12 @@ public class Trajet {
 		Random rand = new Random();
 		Trajet trajet = new Trajet();
 
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 15; i++) {
 			Ville nouvelleVille = new Ville(i, new Coords(Math.abs(rand
-					.nextLong() % 10), Math.abs(rand.nextLong() % 10)));
+					.nextLong() % 100), Math.abs(rand.nextLong() % 100)));
 			trajet.addVille(nouvelleVille);
 		}
 
-		Recuit.recuitSimuleVDC(trajet, 0.01f, 80, 5, 0.99f, 1000, 10000);
+		Recuit.recuitSimuleVDC(trajet, 0.01f, 160, 2, 0.99f, 1000, 5000);
 	}
 }
