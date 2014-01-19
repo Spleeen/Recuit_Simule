@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 public class Trajet {
@@ -27,6 +26,18 @@ public class Trajet {
 		System.out.println("Distance réalisée : " + calcDistance());
 	}
 
+	public void printTrajetGeogebra() {
+		String res = "Polygone[";
+
+		for (Ville ville : _villes) {
+			res += "(" + ville.get_coords().x + "," + ville.get_coords().y
+					+ "),";
+		}
+
+		res = res.substring(0, res.length() - 1) + ']';
+		System.out.println(res);
+	}
+
 	public ArrayList<Ville> get_villes() {
 		return _villes;
 	}
@@ -43,19 +54,19 @@ public class Trajet {
 	public float calcDistance() {
 		float distanceTrajet = 0;
 
-		for (int i = 0 ; i<_villes.size()-1 ; i++) {
+		for (int i = 0; i < (_villes.size() - 1); i++) {
 			final Coords A = _villes.get(i).get_coords();
-			final Coords B = _villes.get(i+1).get_coords();
+			final Coords B = _villes.get(i + 1).get_coords();
 			distanceTrajet += Math.sqrt(Math.pow(B.x - A.x, 2)
 					+ Math.pow(B.y - A.y, 2));
 
 		}
 
-		if(_villes.size() > 1)
-		{
-			final Coords A = _villes.get(_villes.size()-1).get_coords();
+		if (_villes.size() > 1) {
+			final Coords A = _villes.get(_villes.size() - 1).get_coords();
 			final Coords B = _villes.get(0).get_coords();
-			distanceTrajet += Math.sqrt(Math.pow(B.x - A.x, 2) + Math.pow(B.y - A.y, 2));
+			distanceTrajet += Math.sqrt(Math.pow(B.x - A.x, 2)
+					+ Math.pow(B.y - A.y, 2));
 		}
 
 		return distanceTrajet;
@@ -78,8 +89,9 @@ public class Trajet {
 	}
 
 	public static Trajet permuteRandom(Trajet traj) {
-		if(traj.nbVilles() <= 1)
+		if (traj.nbVilles() <= 1) {
 			new Trajet(traj);
+		}
 
 		Random rand = new Random();
 		Trajet tempTraj = new Trajet(traj);
@@ -104,11 +116,11 @@ public class Trajet {
 		Trajet trajet = new Trajet();
 
 		for (int i = 0; i < 20; i++) {
-			Ville nouvelleVille = new Ville(i, new Coords(Math.abs(rand.nextLong()%1000),
-					Math.abs(rand.nextLong()%1000)));
+			Ville nouvelleVille = new Ville(i, new Coords(Math.abs(rand
+					.nextLong() % 10), Math.abs(rand.nextLong() % 10)));
 			trajet.addVille(nouvelleVille);
 		}
 
-		Recuit.recuitSimuleVDC(trajet, 0.01f, 80, 5, 0.99f, 1000, 1000);
+		Recuit.recuitSimuleVDC(trajet, 0.01f, 80, 5, 0.99f, 1000, 10000);
 	}
 }

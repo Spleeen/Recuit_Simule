@@ -61,13 +61,7 @@ public class Recuit {
 
 	public static void recuitSimuleVDC(Trajet x0, float pas, float T0,
 			float Tmin, float k, int maxPaliers, int maxIter) {
-		// !!x0 en random
 
-		// Pas constant
-		// T0 : température (brulante) de départ
-		// xtemp : position actuelle
-		// xprime : nouvelle position (augmenté du pas)
-		// xopt : position optimale partielle
 		float p = 0;
 		int nbIter = 0;
 		int nbPaliers = 0;
@@ -104,8 +98,11 @@ public class Recuit {
 			nbPaliers++;
 		}
 
-		x0.printTrajet();
-		xopt.printTrajet();
+		System.out.println("A copier-coller dans Geogebra");
+		System.out.println("AVANT");
+		x0.printTrajetGeogebra();
+		System.out.println("APRES");
+		xopt.printTrajetGeogebra();
 		System.out.println("Nombre d'itérations :" + nbIter);
 	}
 
