@@ -13,8 +13,9 @@ public class Trajet {
 	public void printTrajet() {
 		System.out.println("Le voyageur passera par :");
 		for (Ville ville : _villes) {
-			System.out.println(" - La ville " + ville.get_ID() + " situé en ("
-					+ ville.get_coords().x + "," + ville.get_coords().y + ")");
+			System.out.println(" - La ville N°" + ville.get_ID()
+					+ " situé en (" + ville.get_coords().x + ","
+					+ ville.get_coords().y + ")");
 		}
 	}
 
@@ -31,12 +32,11 @@ public class Trajet {
 		return _villes.remove(ville);
 	}
 
-	public int calcDistance(Trajet trajet) {
+	public float calcDistance() {
 
-		int distanceTrajet = 0;
+		float distanceTrajet = 0;
 
-		for (Iterator<Ville> iterator = trajet.get_villes().iterator(); iterator
-				.hasNext();) {
+		for (Iterator<Ville> iterator = _villes.iterator(); iterator.hasNext();) {
 			Ville vA = iterator.next();
 			Ville vB = iterator.next();
 			Coords A = vA.get_coords();
@@ -49,17 +49,51 @@ public class Trajet {
 		return distanceTrajet;
 	}
 
+	public int nbVilles() {
+		return get_villes().size();
+	}
+
+	public boolean replaceVille(Ville ville1, Ville ville2) {
+
+		for (int i = 0; i < _villes.size(); i++) {
+			if (_villes.get(i).get_ID() == ville1.get_ID()) {
+				_villes.set(i, ville2);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static Trajet permuteRandom(Trajet traj) {
+		Random rand = new Random();
+		Trajet tempTraj = traj;
+		int posRandA = 0;
+		int posRandB = 0;
+
+		while (posRandA == posRandB) {
+			posRandA = rand.nextInt(tempTraj.nbVilles());
+			posRandB = rand.nextInt(tempTraj.nbVilles());
+		}
+
+		Ville villeA = tempTraj.get_villes().get(posRandA);
+		tempTraj.replaceVille(villeA, tempTraj.get_villes().get(posRandB));
+		tempTraj.replaceVille(tempTraj.get_villes().get(posRandB), villeA);
+
+		return tempTraj;
+	}
+
 	public static void main(String[] args) {
 
 		Random rand = new Random();
 		Trajet trajet = new Trajet();
 
 		for (int i = 0; i < 20; i++) {
-			Ville nouvelleVille = new Ville(i, new Coords(rand.nextInt(),
-					rand.nextInt()));
+			Ville nouvelleVille = new Ville(i, new Coords(rand.nextLong(),
+					rand.nextLong()));
 			trajet.addVille(nouvelleVille);
 		}
 
-		Recuit.recuitSimuleVDC(0, 0.01f, 80, 5, 0.99f, 1000, 1000);
+		Recuit.recuitSimuleVDC(trajet, 0.01f, 80, 5, 0.99f, 1000, 1000);
 	}
 }

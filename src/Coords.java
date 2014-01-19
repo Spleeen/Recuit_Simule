@@ -1,7 +1,7 @@
 public class Coords {
-	public int x, y;
+	public float x, y;
 
-	public Coords(int x, int y) {
+	public Coords(float x, float y) {
 		super();
 		this.x = x;
 		this.y = y;
