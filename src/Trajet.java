@@ -10,13 +10,21 @@ public class Trajet {
 		super();
 	}
 
+	public Trajet(Trajet other) {
+		super();
+		_villes = new ArrayList<Ville>(other.get_villes());
+	}
+
 	public void printTrajet() {
 		System.out.println("Le voyageur passera par :");
+
 		for (Ville ville : _villes) {
 			System.out.println(" - La ville N°" + ville.get_ID()
 					+ " situé en (" + ville.get_coords().x + ","
 					+ ville.get_coords().y + ")");
 		}
+
+		System.out.println("Distance réalisée : " + calcDistance());
 	}
 
 	public ArrayList<Ville> get_villes() {
@@ -33,17 +41,21 @@ public class Trajet {
 	}
 
 	public float calcDistance() {
-
 		float distanceTrajet = 0;
 
-		for (Iterator<Ville> iterator = _villes.iterator(); iterator.hasNext();) {
-			Ville vA = iterator.next();
-			Ville vB = iterator.next();
-			Coords A = vA.get_coords();
-			Coords B = vB.get_coords();
+		for (int i = 0 ; i<_villes.size()-1 ; i++) {
+			final Coords A = _villes.get(i).get_coords();
+			final Coords B = _villes.get(i+1).get_coords();
 			distanceTrajet += Math.sqrt(Math.pow(B.x - A.x, 2)
 					+ Math.pow(B.y - A.y, 2));
 
+		}
+
+		if(_villes.size() > 1)
+		{
+			final Coords A = _villes.get(_villes.size()-1).get_coords();
+			final Coords B = _villes.get(0).get_coords();
+			distanceTrajet += Math.sqrt(Math.pow(B.x - A.x, 2) + Math.pow(B.y - A.y, 2));
 		}
 
 		return distanceTrajet;
@@ -66,8 +78,11 @@ public class Trajet {
 	}
 
 	public static Trajet permuteRandom(Trajet traj) {
+		if(traj.nbVilles() <= 1)
+			new Trajet(traj);
+
 		Random rand = new Random();
-		Trajet tempTraj = traj;
+		Trajet tempTraj = new Trajet(traj);
 		int posRandA = 0;
 		int posRandB = 0;
 
@@ -89,8 +104,8 @@ public class Trajet {
 		Trajet trajet = new Trajet();
 
 		for (int i = 0; i < 20; i++) {
-			Ville nouvelleVille = new Ville(i, new Coords(rand.nextLong(),
-					rand.nextLong()));
+			Ville nouvelleVille = new Ville(i, new Coords(Math.abs(rand.nextLong()%1000),
+					Math.abs(rand.nextLong()%1000)));
 			trajet.addVille(nouvelleVille);
 		}
 

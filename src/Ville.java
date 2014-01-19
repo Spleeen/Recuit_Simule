@@ -1,4 +1,3 @@
-
 public class Ville {
 
 	private Coords _coords;

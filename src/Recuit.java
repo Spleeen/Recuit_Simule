@@ -71,8 +71,8 @@ public class Recuit {
 		float p = 0;
 		int nbIter = 0;
 		int nbPaliers = 0;
-		Trajet xtemp = x0;
-		Trajet xopt = x0;
+		Trajet xtemp = new Trajet(x0);
+		Trajet xopt = new Trajet(x0);
 		Trajet xprime = new Trajet();
 		float Df = 0;
 		float Ttemp = T0;
@@ -86,9 +86,9 @@ public class Recuit {
 				Df = xprime.calcDistance() - xtemp.calcDistance();
 				// Si la solution est améliorante
 				if (Df < 0) {
-					xtemp = xprime;
+					xtemp = new Trajet(xprime);
 					if (xtemp.calcDistance() < xopt.calcDistance()) {
-						xopt = xtemp;
+						xopt = new Trajet(xtemp);
 					}
 				}
 				// si elle n'est pas améliorante, on autorise une remontée
@@ -96,7 +96,7 @@ public class Recuit {
 					p = rand.nextFloat();
 
 					if (p <= (Math.exp(-Df / Ttemp))) {
-						xtemp = xprime;
+						xtemp = new Trajet(xprime);
 					}
 				}
 			}
