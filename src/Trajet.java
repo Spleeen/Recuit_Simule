@@ -115,12 +115,12 @@ public class Trajet {
 		Random rand = new Random();
 		Trajet trajet = new Trajet();
 
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 40; i++) {
 			Ville nouvelleVille = new Ville(i, new Coords(Math.abs(rand
 					.nextLong() % 1000), Math.abs(rand.nextLong() % 1000)));
 			trajet.addVille(nouvelleVille);
 		}
 
-		Recuit.recuitSimuleVDC(trajet, 0.01f, 160, 2, 0.99f, 1000, 5000);
+		Recuit.recuitSimuleVDC(trajet, 0.01f, 260, 2, 0.99f, 1000, 13000);
 	}
 }
